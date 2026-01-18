@@ -13,6 +13,37 @@ const BIN_TO_CAT: [&str; 16] = [
     "mrrrrp", "mrrrrrp", "purr", "purrr", "purrrr", "purrrrr",
 ];
 
+fn cat_noise_to_bin(cat_noise: &str) -> usize {
+    if cat_noise.get(0..1).unwrap() == "p" {
+        // length min bound to 4
+        let len = usize::max(cat_noise.len(), 4);
+        // length max bound to 7
+        let len = usize::min(len, 7);
+        return 12 | (len - 4);
+        // if meow
+    } else if cat_noise.get(0..1).unwrap() == "m" && cat_noise.contains("e") {
+        // length min bound to 4
+        let len = usize::max(cat_noise.len(), 4);
+        // length max bound to 7
+        let len = usize::min(len, 7);
+        return (len - 4);
+        // if mrrp
+    } else if cat_noise.get(0..1).unwrap() == "m" && !cat_noise.contains("o") {
+        // length min bound to 4
+        let len = usize::max(cat_noise.len(), 4);
+        // length max bound to 7
+        let len = usize::min(len, 7);
+        return 8 | (len - 4);
+        // if mrow
+    } else {
+        // length min bound to 4
+        let len = usize::max(cat_noise.len(), 4);
+        // length max bound to 7
+        let len = usize::min(len, 7);
+        return 4 | (len - 4);
+    }
+}
+
 // translate a {length} bit number to its String binary representation with a length of {length} bits
 fn number_to_bin(number: u8, length: usize) -> String {
     let result = format!("{number:b}");
@@ -41,8 +72,7 @@ fn text_to_bin(text: &str) -> String {
 fn cat_to_bin(text: &str) -> String {
     text.split(" ")
         .filter(|x| x != &":3" && x != &":3c")
-        .map(|x| BIN_TO_CAT.iter().enumerate().find(|y| y.1 == &x).unwrap())
-        .map(|x| x.0)
+        .map(|x| cat_noise_to_bin(x))
         .map(|x| number_to_bin(x as u8, 4))
         .collect::<Vec<String>>()
         .join("")
