@@ -26,7 +26,7 @@ fn cat_noise_to_bin(cat_noise: &str) -> usize {
         let len = usize::max(cat_noise.len(), 4);
         // length max bound to 7
         let len = usize::min(len, 7);
-        return (len - 4);
+        return len - 4;
         // if mrrp
     } else if cat_noise.get(0..1).unwrap() == "m" && !cat_noise.contains("o") {
         // length min bound to 4
