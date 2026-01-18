@@ -51,6 +51,12 @@ fn main() {
         text_starting_index = 4;
     }
 
+    if args.len() < text_starting_index + 1 {
+        println!("the comamnd must include something to decrypt/crypt\n");
+        show_help(program_name);
+        return;
+    }
+
     // decrypt
     if subcommand == CAT_TO_TEXT_SUB_COMMAND_NAME {
         let mut decrypted_message = args[text_starting_index..].join(" ");

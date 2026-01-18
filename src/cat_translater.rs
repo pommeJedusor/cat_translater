@@ -65,7 +65,6 @@ fn text_to_bin(text: &str) -> Result<String, String> {
             unvalid_characters[0], "{}"
         ));
     }
-    println!("test: {:?}", unvalid_characters);
     Ok(text
         .chars()
         .map(|x| {
